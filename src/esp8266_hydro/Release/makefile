@@ -66,19 +66,19 @@ all: esp8266_hydro
 esp8266_hydro: $(FLASH_IMAGE)
 	@echo 'Building target: $@'
 	@echo 'Printing size:'
-	"/home/ddv/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "/home/ddv/workspace.luna/esp8266_hydro/Release/esp8266_hydro.elf"
+	"/home/ddv/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-size" -A "/home/ddv/git/hydroponics/src/esp8266_hydro/Release/esp8266_hydro.elf"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 arduino.ar: $(AR_OBJ)
 	@echo 'Starting archiver'
-	"/home/ddv/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-ar" cru  "/home/ddv/workspace.luna/esp8266_hydro/Release/arduino.ar"   $(AR_OBJ)
+	"/home/ddv/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-ar" cru  "/home/ddv/git/hydroponics/src/esp8266_hydro/Release/arduino.ar"   $(AR_OBJ)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 esp8266_hydro.elf: $(LINK_OBJ) $(AR)
 	@echo 'Starting combiner'
-	"/home/ddv/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-L/home/ddv/.arduino15/packages/esp8266/hardware/esp8266/2.0.0/tools/sdk/lib" "-L/home/ddv/.arduino15/packages/esp8266/hardware/esp8266/2.0.0/tools/sdk/ld" "-Teagle.flash.512k64.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy  -o "/home/ddv/workspace.luna/esp8266_hydro/Release/esp8266_hydro.elf" -Wl,--start-group   $(LINK_OBJ) $(AR)  "/home/ddv/workspace.luna/esp8266_hydro/Release/arduino.ar" -lm -lgcc -lhal -lphy -lnet80211 -llwip -lwpa -lmain -lpp -lsmartconfig -lwps -lcrypto -laxtls -Wl,--end-group  "-L/home/ddv/workspace.luna/esp8266_hydro/Release"
+	"/home/ddv/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/1.20.0-26-gb404fb9-2/bin/xtensa-lx106-elf-gcc" -g -Os -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static "-L/home/ddv/.arduino15/packages/esp8266/hardware/esp8266/2.0.0/tools/sdk/lib" "-L/home/ddv/.arduino15/packages/esp8266/hardware/esp8266/2.0.0/tools/sdk/ld" "-Teagle.flash.512k64.ld" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy  -o "/home/ddv/git/hydroponics/src/esp8266_hydro/Release/esp8266_hydro.elf" -Wl,--start-group   $(LINK_OBJ) $(AR)  "/home/ddv/git/hydroponics/src/esp8266_hydro/Release/arduino.ar" -lm -lgcc -lhal -lphy -lnet80211 -llwip -lwpa -lmain -lpp -lsmartconfig -lwps -lcrypto -laxtls -Wl,--end-group  "-L/home/ddv/git/hydroponics/src/esp8266_hydro/Release"
 	@echo 'Finished building: $@'
 	@echo ' '
 
@@ -90,7 +90,7 @@ esp8266_hydro.eep: $(ELF)
 
 esp8266_hydro.bin: $(EEP)
 	@echo 'Create Flash image (ihex format)'
-	"/home/ddv/.arduino15/packages/esp8266/tools/esptool/0.4.6/esptool" -eo "/home/ddv/.arduino15/packages/esp8266/hardware/esp8266/2.0.0/bootloaders/eboot/eboot.elf" -bo "/home/ddv/workspace.luna/esp8266_hydro/Release/esp8266_hydro.bin" -bm qio -bf 40 -bz 512K -bs .text -bp 4096 -ec -eo "/home/ddv/workspace.luna/esp8266_hydro/Release/esp8266_hydro.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
+	"/home/ddv/.arduino15/packages/esp8266/tools/esptool/0.4.6/esptool" -eo "/home/ddv/.arduino15/packages/esp8266/hardware/esp8266/2.0.0/bootloaders/eboot/eboot.elf" -bo "/home/ddv/git/hydroponics/src/esp8266_hydro/Release/esp8266_hydro.bin" -bm qio -bf 40 -bz 512K -bs .text -bp 4096 -ec -eo "/home/ddv/git/hydroponics/src/esp8266_hydro/Release/esp8266_hydro.elf" -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec
 	@echo 'Finished building: $@'
 	@echo ' '
 
