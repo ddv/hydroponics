@@ -14,7 +14,12 @@
 
 
 //add your function definitions for the project avr_hydro here
-
+String get_item_name_by_index(int index);
+void requestEvent();
+void receiveEvent(int howMany);
+uint8_t crc8(const uint8_t *addr, uint8_t len);
+bool check_crc16(const uint8_t* input, uint16_t len, const uint8_t* inverted_crc, uint16_t crc);
+uint16_t crc16(const uint8_t* input, uint16_t len, uint16_t crc);
 
 
 
