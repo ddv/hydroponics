@@ -1,0 +1,12 @@
+/arduino/
+/makefile
+/objects.mk
+/sources.mk
+/subdir.mk
+/Libraries/
+/arduino.ar
+/avr_hydro.cpp.d
+/avr_hydro.cpp.o
+/avr_hydro.eep
+/avr_hydro.elf
+/avr_hydro.hex
