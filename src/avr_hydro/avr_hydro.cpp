@@ -69,18 +69,56 @@ char last_responce_data[MSG_BODY_SIZE + CRC_SIZE];
 
 DHT dht(DHTPIN, DHTTYPE);
 
+// Определяем количество значений в массиве.
+// Чем больше это количество, тем более сглаженным будет результат,
+// и тем больше будет задержка между входными и выходными данными.
+// Использование константы вместо переменной позволяет задать размер для массива.
+const int numReadings = 20;
+
+int readings[numReadings];  // данные, считанные с входного аналогового контакта
+int index = 0;       // индекс для значения, которое считывается в данный момент
+int total = 0;                  // суммарное значение
+int average = 0;                // среднее значение
+
 void setup() {
 	Serial.begin(115200);
 	Serial.println("start");
 	Wire.begin(2);                // join i2c bus with address #2
 	Wire.onRequest(requestEvent); // register event
 	Wire.onReceive(receiveEvent); // register event
+
+	// выставляем все считываемые значения на ноль:
+	for (int thisReading = 0; thisReading < numReadings; thisReading++)
+		readings[thisReading] = 0;
 }
 
 void loop() {
 
 	int sensorValue = analogRead(LIGHTPIN);
-	item3_val = sensorValue;
+	sensorValue = 100 - map(sensorValue, 0, 585, 0, 99);
+	// 0 - макс яркость, 585 - мин яркость
+
+	// берем последнее значение...
+	total = total - readings[index];
+	// ...которое было считано от сенсора:
+	readings[index] = sensorValue;
+	// добавляем его к общей сумме:
+	total = total + readings[index];
+	// продвигаемся к следующему значению в массиве:
+	index = index + 1;
+
+	// если мы в конце массива...
+	if (index >= numReadings)
+		// ...возвращаемся к началу:
+		index = 0;
+
+	// вычисляем среднее значение:
+	average = total / numReadings;
+
+	item3_val = average;
+//	item3_val = 20 - map(sensorValue, 0, 585, 0, 20);
+//	item3_val = map(sensorValue, 0, 1023/2, 0, 255);
+//	item3_val = sensorValue;
 
 	float h = dht.readHumidity();
 	// Read temperature as Celsius (the default)
@@ -248,8 +286,6 @@ void receiveEvent(int howMany) {
 	if (!cmd.startsWith("ATGET,") && !cmd.startsWith("ATCMD,"))
 		return;
 
-
-
 	//Не совпал CRC
 	if (!check_i2c_command_crc(cmd)) {
 		// Заполняем ответ
@@ -260,9 +296,6 @@ void receiveEvent(int howMany) {
 		Serial.println("CRCERR");
 		return;
 	}
-
-
-
 
 	// Запрос "следующего" item (ATGET,FF)
 	if (cmd.startsWith("ATGET,") && cmd.length() == 9) {
@@ -294,21 +327,16 @@ void receiveEvent(int howMany) {
 
 		pack_output_message(data);
 
-
 		return;
 
 	}
 	if (cmd.startsWith("ATGET,")) { // Запрос конкретного item
 
-
-
 		String item_name = cmd.substring(cmd.indexOf(",") + 1,
 				cmd.lastIndexOf(","));
 
-
 		// Количество итемов
-		int items_count = sizeof(ITEMS) /2 ;
-
+		int items_count = sizeof(ITEMS) / 2;
 
 		for (int i = 0; i < items_count; i++) {
 
@@ -337,8 +365,6 @@ void receiveEvent(int howMany) {
 		return;
 
 	} else if (cmd.startsWith("ATCMD,")) { // Запрос команды
-
-
 
 		String item_name_val = cmd.substring(cmd.indexOf(",") + 1,
 				cmd.lastIndexOf(","));
