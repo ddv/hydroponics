@@ -5,6 +5,7 @@
 
 #define LIGHTPIN A7     // what pin we're connected to
 #define DHTPIN 4     // what pin we're connected to
+#define LEDPIN 13     // what pin we're connected to
 
 #define DHTTYPE DHT11   // DHT 11
 
@@ -80,6 +81,9 @@ int index = 0;       // индекс для значения, которое с�
 int total = 0;                  // суммарное значение
 int average = 0;                // среднее значение
 
+unsigned long last_blink_time;
+long blink_period;
+
 void setup() {
 	Serial.begin(115200);
 	Serial.println("start");
@@ -90,9 +94,17 @@ void setup() {
 	// выставляем все считываемые значения на ноль:
 	for (int thisReading = 0; thisReading < numReadings; thisReading++)
 		readings[thisReading] = 0;
+
+	pinMode(LEDPIN, OUTPUT);
+	digitalWrite(LEDPIN, LOW);
 }
 
 void loop() {
+
+	if (millis() - blink_period > last_blink_time) {
+		last_blink_time = millis();
+		digitalWrite(LEDPIN, LOW);
+	}
 
 	int sensorValue = analogRead(LIGHTPIN);
 	sensorValue = 100 - map(sensorValue, 0, 585, 0, 99);
@@ -266,6 +278,11 @@ void pack_output_message(String data) {
 
 // Обработка запроса от мастера
 void receiveEvent(int howMany) {
+
+	if (millis() - blink_period > last_blink_time) {
+		last_blink_time = millis();
+		digitalWrite(LEDPIN, HIGH);
+	}
 
 	//Длинные строки не парсим
 	if (howMany > (MSG_BODY_SIZE + CRC_SIZE))
