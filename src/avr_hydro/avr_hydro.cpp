@@ -2,6 +2,8 @@
 #include "avr_hydro.h"
 #include <Wire.h>
 #include "DHT.h"
+#include <avr/wdt.h>
+
 
 #define LIGHTPIN A7     // what pin we're connected to
 #define DHTPIN 4     // what pin we're connected to
@@ -45,16 +47,16 @@ static const uint8_t PROGMEM dscrc_table[] = { 0, 94, 188, 226, 97, 63, 221,
 const char ITEM1[] = "T_ins";
 const char ITEM2[] = "H_ins";
 const char ITEM3[] = "Light_ins";
-const char ITEM4[] = "item4";
+const char ITEM4[] = "uptime";
 const char ITEM5[] = "item5";
 
 const char* ITEMS[] = { ITEM1, ITEM2, ITEM3, ITEM4, ITEM5 };
 
-float item1_val = 1.1;
-float item2_val = 2.1;
-float item3_val = 3.1;
-float item4_val = 4.1;
-float item5_val = 5.1;
+float item1_val = NAN;
+float item2_val = NAN;
+float item3_val = NAN;
+float item4_val = NAN;
+float item5_val = NAN;
 
 const String ANS_MASTER = "RESP[";
 const String REQ_MASTER = "REQ[";
@@ -85,6 +87,10 @@ unsigned long last_blink_time;
 long blink_period;
 
 void setup() {
+
+	// включаем вачдог
+	wdt_enable(WDTO_8S);
+
 	Serial.begin(115200);
 	Serial.println("start");
 	Wire.begin(2);                // join i2c bus with address #2
@@ -101,9 +107,21 @@ void setup() {
 
 void loop() {
 
+	// сброс вачдога
+	wdt_reset();
+
 	if (millis() - blink_period > last_blink_time) {
 		last_blink_time = millis();
 		digitalWrite(LEDPIN, LOW);
+		delay(50);
+		digitalWrite(LEDPIN, HIGH);
+		delay(50);
+		digitalWrite(LEDPIN, LOW);
+		delay(50);
+		digitalWrite(LEDPIN, HIGH);
+		delay(50);
+		digitalWrite(LEDPIN, LOW);
+		delay(200);
 	}
 
 	int sensorValue = analogRead(LIGHTPIN);
@@ -143,7 +161,15 @@ void loop() {
 	if (!isnan(h)) {
 		item2_val = h;
 	}
-	yield();
+
+	item4_val = millis() /1000;
+
+	Serial.print("loop ");
+	Serial.println(millis());
+
+
+//	delay(10000);
+//	yield();
 
 }
 
