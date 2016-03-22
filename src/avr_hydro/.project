@@ -32,6 +32,16 @@
 			<locationURI>ArduinoPrivateLibPath/DHT-sensor-library-master</locationURI>
 		</link>
 		<link>
+			<name>Libraries/MemoryFree-master</name>
+			<type>2</type>
+			<locationURI>ArduinoPrivateLibPath/MemoryFree-master</locationURI>
+		</link>
+		<link>
+			<name>Libraries/Modbus-Master-Slave-for-Arduino-master</name>
+			<type>2</type>
+			<locationURI>ArduinoLibPath/Modbus-Master-Slave-for-Arduino-master</locationURI>
+		</link>
+		<link>
 			<name>Libraries/Wire</name>
 			<type>2</type>
 			<locationURI>ArduinoHardwareLibPath/Wire</locationURI>

@@ -15,6 +15,8 @@
 
 //add your function definitions for the project avr_hydro here
 String get_item_name_by_index(int index);
+void pack_output_message(String data);
+boolean check_i2c_command_crc(const String& cmd);
 void requestEvent();
 void receiveEvent(int howMany);
 uint8_t crc8(const uint8_t *addr, uint8_t len);
