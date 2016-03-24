@@ -97,8 +97,8 @@ void loop() {
 
 	valLight = average;
 
-	// Опрос раз в 30 сек (дорогая операция)
-	if (dht_time == 0 || dht_time < millis() - 30000) {
+	// Опрос раз в 10 сек (дорогая операция)
+	if (dht_time == 0 || dht_time < millis() - 10000) {
 		float h = dht.readHumidity();
 		float t = dht.readTemperature();
 

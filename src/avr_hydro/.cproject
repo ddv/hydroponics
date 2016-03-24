@@ -21,11 +21,11 @@
 								<option id="it.baeyens.arduino.compiler.cpp.sketch.option.incpath.1154371282" name="Include Paths (-I)" superClass="it.baeyens.arduino.compiler.cpp.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/arduino/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/arduino/variant}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/DHT-sensor-library-master}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/MemoryFree-master}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/Wire}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/Wire/utility}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/Modbus-Master-Slave-for-Arduino-master}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/DHT-sensor-library-master}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.arduino.compiler.cpp.sketch.input.1766974848" name="CPP source files" superClass="it.baeyens.arduino.compiler.cpp.sketch.input"/>
 							</tool>
@@ -33,11 +33,11 @@
 								<option id="it.baeyens.arduino.compiler.c.sketch.option.incpath.1891615011" name="Include Paths (-I)" superClass="it.baeyens.arduino.compiler.c.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/arduino/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/arduino/variant}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/DHT-sensor-library-master}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/MemoryFree-master}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/Wire}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/Wire/utility}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/Modbus-Master-Slave-for-Arduino-master}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/avr_hydro/Libraries/DHT-sensor-library-master}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.arduino.compiler.c.sketch.input.1870767096" name="C Source Files" superClass="it.baeyens.arduino.compiler.c.sketch.input"/>
 							</tool>
